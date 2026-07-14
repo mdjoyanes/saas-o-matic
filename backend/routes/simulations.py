@@ -61,3 +61,25 @@ def create_simulation():
     db.session.commit()
 
     return jsonify(simulation.to_dict()), 201
+
+
+@simulations_bp.route("/customers/<int:customer_id>/simulations", methods=["GET"])
+def get_customer_simulations(customer_id):
+
+    customer = Customer.query.get(customer_id)
+
+    if not customer:
+        return jsonify({
+            "error": "Customer not found."
+        }), 404
+
+    simulations = Simulation.query.filter_by(
+        customer_id=customer_id
+    ).order_by(
+        Simulation.created_at.desc()
+    ).all()
+
+    return jsonify([
+        simulation.to_dict()
+        for simulation in simulations
+    ]), 200

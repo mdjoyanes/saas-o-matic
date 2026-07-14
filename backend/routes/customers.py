@@ -75,6 +75,20 @@ def get_customers():
     customers = Customer.query.all()
     return jsonify([customer.to_dict() for customer in customers]), 200
 
+@customers_bp.route("/customers/search", methods=["GET"])
+def search_customers():
+    query = request.args.get("q", "").strip()
+
+    if not query:
+        return jsonify([]), 200
+
+    customers = Customer.query.filter(
+        (Customer.company_name.ilike(f"%{query}%")) |
+        (Customer.tax_identifier.ilike(f"%{query}%"))
+    ).all()
+
+    return jsonify([customer.to_dict() for customer in customers]), 200
+
 
 @customers_bp.route("/customers/<int:customer_id>", methods=["GET"])
 def get_customer(customer_id):
