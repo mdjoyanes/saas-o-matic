@@ -8,6 +8,7 @@ from database import db
 # Importar los modelos
 from models.customer import Customer
 from models.simulation import Simulation
+from routes.simulations import simulations_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -17,6 +18,8 @@ CORS(app)
 db.init_app(app)
 
 app.register_blueprint(customers_bp)
+
+app.register_blueprint(simulations_bp)
 
 @app.route("/")
 def home():

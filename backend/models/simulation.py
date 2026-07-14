@@ -29,3 +29,17 @@ class Simulation(db.Model):
     total_price = db.Column(db.Float, nullable=False)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "customer_id": self.customer_id,
+            "active_users": self.active_users,
+            "storage_gb": self.storage_gb,
+            "api_calls": self.api_calls,
+            "base_price": self.base_price,
+            "tax_rate": self.tax_rate,
+            "tax_amount": self.tax_amount,
+            "total_price": self.total_price,
+            "created_at": self.created_at.isoformat()
+        }

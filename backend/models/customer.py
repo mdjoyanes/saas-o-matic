@@ -26,3 +26,14 @@ class Customer(db.Model):
         lazy=True,
         cascade="all, delete-orphan"
     )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "company_name": self.company_name,
+            "tax_identifier": self.tax_identifier,
+            "email": self.email,
+            "country": self.country,
+            "plan": self.plan,
+            "created_at": self.created_at.isoformat()
+        }
