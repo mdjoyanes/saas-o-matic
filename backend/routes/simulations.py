@@ -83,3 +83,20 @@ def get_customer_simulations(customer_id):
         simulation.to_dict()
         for simulation in simulations
     ]), 200
+
+@simulations_bp.route("/simulations/<int:simulation_id>", methods=["DELETE"])
+def delete_simulation(simulation_id):
+
+    simulation = Simulation.query.get(simulation_id)
+
+    if not simulation:
+        return jsonify({
+            "error": "Simulation not found."
+        }), 404
+
+    db.session.delete(simulation)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Simulation deleted successfully."
+    }), 200

@@ -1,0 +1,23 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Database
+*.db
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+
+# Environment
+.env
+
+# Logs
+*.log
+
+# Editor
+.vscode/
+.idea/
+.DS_Store

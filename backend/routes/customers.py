@@ -32,7 +32,10 @@ def create_customer():
             }), 400
 
     try:
-        validate_email(data["email"])
+        validate_email(
+            data["email"],
+            check_deliverability=False
+        )
     except EmailNotValidError:
         return jsonify({
             "error": "Invalid email address."
@@ -75,6 +78,7 @@ def get_customers():
     customers = Customer.query.all()
     return jsonify([customer.to_dict() for customer in customers]), 200
 
+
 @customers_bp.route("/customers/search", methods=["GET"])
 def search_customers():
     query = request.args.get("q", "").strip()
@@ -87,7 +91,10 @@ def search_customers():
         (Customer.tax_identifier.ilike(f"%{query}%"))
     ).all()
 
-    return jsonify([customer.to_dict() for customer in customers]), 200
+    return jsonify([
+        customer.to_dict()
+        for customer in customers
+    ]), 200
 
 
 @customers_bp.route("/customers/<int:customer_id>", methods=["GET"])
