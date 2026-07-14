@@ -71,4 +71,12 @@ export const createCustomer = async (customerData: {
 
 };
 
+export const deleteCustomer = async (
+    customerId: number
+): Promise<void> => {
+
+    await api.delete(`/customers/${customerId}`);
+
+};
+
 export default api;

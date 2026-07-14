@@ -175,3 +175,16 @@ def get_customer(customer_id):
     customer = Customer.query.get_or_404(customer_id)
 
     return jsonify(customer.to_dict()), 200
+
+
+@customers_bp.route("/customers/<int:customer_id>", methods=["DELETE"])
+def delete_customer(customer_id):
+
+    customer = Customer.query.get_or_404(customer_id)
+
+    db.session.delete(customer)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Customer deleted successfully."
+    }), 200

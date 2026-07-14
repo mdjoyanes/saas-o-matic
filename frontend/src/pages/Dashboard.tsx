@@ -95,7 +95,10 @@ export default function Dashboard() {
                             className="mb-4"
                         >
 
-                            <CustomerCard customer={customer} />
+                            <CustomerCard
+                                customer={customer}
+                                onCustomerDeleted={() => loadCustomers()}
+                            />
 
                         </Col>
 

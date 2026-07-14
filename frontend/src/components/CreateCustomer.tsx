@@ -45,7 +45,7 @@ export default function CreateCustomer({
 
         if (name === "tax_identifier") {
 
-            const taxRegex = /^[A-Z0-9-]+$/i;
+            const taxRegex = /^[A-Z0-9-]{5,20}$/i;
 
 
             setFieldErrors(prev => ({
@@ -77,7 +77,7 @@ export default function CreateCustomer({
 
     };
     const handleChange = (
-        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
 
         let value = e.target.value;
@@ -90,9 +90,8 @@ export default function CreateCustomer({
                 .replace(/[^A-Z0-9-]/g, "");
 
 
-            if (value.length > 20) {
-                value = value.slice(0, 20);
-            }
+            // máximo 20 caracteres
+            value = value.substring(0, 20);
 
         }
 
@@ -112,6 +111,7 @@ export default function CreateCustomer({
         );
 
     };
+
     const handleSubmit = async () => {
 
         try {
