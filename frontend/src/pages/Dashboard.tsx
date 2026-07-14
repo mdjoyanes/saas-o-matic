@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import CustomerCard from "../components/CustomerCard";
 import SearchBar from "../components/SearchBar";
+import CreateCustomer from "../components/CreateCustomer";
 
 import type { Customer } from "../types/customer";
 import { getCustomers } from "../services/api";
@@ -45,17 +46,25 @@ export default function Dashboard() {
 
             </Row>
 
-            <Row className="mb-5 justify-content-center">
+            <Row className="mb-4 align-items-center">
 
-                <Col
-                    xs={12}
-                    md={8}
-                    lg={6}
-                >
+                <Col md={8}>
 
                     <SearchBar
                         value={search}
                         onChange={setSearch}
+                    />
+
+                </Col>
+
+
+                <Col
+                    md={4}
+                    className="text-md-end mt-3 mt-md-0"
+                >
+
+                    <CreateCustomer
+                        onCustomerCreated={loadCustomers}
                     />
 
                 </Col>

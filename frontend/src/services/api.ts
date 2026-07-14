@@ -54,4 +54,21 @@ export const deleteSimulation = async (
 
 };
 
+export const createCustomer = async (customerData: {
+    company_name: string;
+    tax_identifier: string;
+    email: string;
+    country: string;
+    plan: string;
+}) => {
+
+    const response = await api.post(
+        "/customers",
+        customerData
+    );
+
+    return response.data;
+
+};
+
 export default api;
