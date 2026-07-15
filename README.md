@@ -1,4 +1,5 @@
 # SaaS-O-Matic
+
 ## Dynamic Billing & Subscription Optimizer
 
 SaaS-O-Matic is an internal commercial tool designed to simulate and optimize SaaS subscription pricing for corporate customers.
@@ -12,7 +13,7 @@ The application allows commercial teams to:
 - Apply country taxes
 - Convert prices into different currencies
 
-The project has been developed as a full-stack local application with a React frontend and Flask REST API backend.
+The project has been developed as a full-stack application using a React frontend and a Flask REST API backend.
 
 ---
 
@@ -20,34 +21,34 @@ The project has been developed as a full-stack local application with a React fr
 
 ## Customer Management
 
-The system allows:
+The system allows users to:
 
 - Create corporate customers
 - Store company information
 - Search customers by company name or tax identifier
 - View customer details
 - Delete customers
-- Validate Spanish DNI, NIF and CIF identifiers using specific algorithms
+- Validate Spanish DNI, NIF and CIF identifiers using their official validation algorithms
 
+---
 
 ## Subscription Simulation
 
 The application supports:
 
 - Creating SaaS subscription simulations
-- Calculating costs using tier pricing
-- Applying country taxes
-- Saving simulation history
-- Tracking creation and update dates
+- Progressive pricing calculation
+- Country-specific tax calculation
+- Simulation history
+- Automatic creation and update timestamps
 
+---
 
-## Multi Currency
+## Multi-Currency Support
 
-The frontend integrates with an external exchange rate API:
+The frontend integrates with the ExchangeRate API:
 
-```
 https://open.er-api.com/v6/latest/EUR
-```
 
 Supported currencies:
 
@@ -55,33 +56,30 @@ Supported currencies:
 - USD ($)
 - GBP (£)
 
+Users can switch currencies dynamically and instantly see converted prices.
 
-Users can change the display currency dynamically and see converted prices in real time.
-
+---
 
 ## Interactive Pricing
 
-The simulator includes:
+The pricing simulator includes:
 
 - Dynamic user slider
-- Real-time price preview
-- Automatic tier calculation
+- Real-time price calculation
+- Progressive tier pricing
 - Currency conversion
-
 
 ---
 
 # Tech Stack
 
-
 ## Backend
 
 - Python
 - Flask
-- Flask SQLAlchemy
+- Flask-SQLAlchemy
 - SQLite
 - REST API
-
 
 ## Frontend
 
@@ -91,40 +89,36 @@ The simulator includes:
 - Axios
 - Vite
 
-
 ---
 
 # Pricing Algorithm
 
-The system uses progressive tier pricing.
+The application uses progressive pricing tiers.
 
 ## Tier 1
 
 ```
 0 - 10 users
-10€/user
+10 €/user
 ```
-
 
 ## Tier 2
 
 ```
 11 - 50 users
-8€/user
+8 €/user
 ```
-
 
 ## Tier 3
 
 ```
 51+ users
-5€/user
+5 €/user
 ```
 
+### Example
 
-Example:
-
-For 15 users:
+For **15 users**:
 
 ```
 First 10 users:
@@ -133,16 +127,15 @@ First 10 users:
 Next 5 users:
 5 × 8€ = 40€
 
-Total:
+Base price:
 140€
 ```
 
-After calculating the base price, the system applies the corresponding country tax.
-
-Example Spain:
+For a Spanish customer:
 
 ```
-Base price: 140€
+Base price:
+140€
 
 VAT (21%):
 29.40€
@@ -151,18 +144,14 @@ Final price:
 169.40€
 ```
 
-
 ---
 
 # Project Structure
 
-
 ```
 saas-o-matic
-
 │
 ├── backend
-│   │
 │   ├── models
 │   │   ├── customer.py
 │   │   └── simulation.py
@@ -180,59 +169,58 @@ saas-o-matic
 │   │   ├── nif_validator.py
 │   │   └── cif_validator.py
 │   │
+│   ├── database.db
+│   ├── requirements.txt
 │   └── app.py
 │
 ├── frontend
-│   │
 │   ├── src
 │   │   ├── components
 │   │   ├── pages
 │   │   ├── services
 │   │   └── types
 │   │
-│   └── package.json
+│   ├── package.json
+│   └── vite.config.ts
 │
 └── ai-workspace
-    │
     ├── architecture
     ├── prompts
     └── specs
 ```
 
-
 ---
 
 # Local Installation
 
-The project runs locally using two different servers:
+The application runs locally using two servers:
 
 - Flask backend
 - React frontend
-
 
 ---
 
 # Backend Setup
 
-
-Open a terminal:
-
+Move to the backend folder:
 
 ```bash
 cd backend
 ```
 
-
 Create a virtual environment:
-
 
 ```bash
 python -m venv venv
 ```
 
+Activate the virtual environment.
 
-Activate the environment:
+### Linux / macOS
 
+```bash
+source venv/bin/activate
+```
 
 ### Windows PowerShell
 
@@ -240,124 +228,93 @@ Activate the environment:
 .\venv\Scripts\activate
 ```
 
-
 Install dependencies:
-
 
 ```bash
 pip install -r requirements.txt
 ```
 
+> **Note:** All required dependencies, including **tzdata** for timezone support, are installed automatically through `requirements.txt`.
 
 Start the backend:
-
 
 ```bash
 python app.py
 ```
 
-
-The API will start on:
-
+The API will be available at:
 
 ```
 http://localhost:5000
 ```
 
-
-You can test it:
-
+Test the API:
 
 ```
 GET http://localhost:5000/
 ```
 
-
 Response:
 
 ```json
 {
-    "message": "SaaS-O-Matic API running"
+  "message": "SaaS-O-Matic API running"
 }
 ```
-
 
 ---
 
 # Frontend Setup
 
-
-Open another terminal:
-
+Open a new terminal:
 
 ```bash
 cd frontend
 ```
 
-
 Install dependencies:
-
 
 ```bash
 npm install
 ```
 
-
-Start development server:
-
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-
-The frontend will run on:
-
+The frontend will be available at:
 
 ```
 http://localhost:5173
 ```
 
-
 ---
 
 # Environment Configuration
 
-
-The frontend uses the backend API URL.
-
-Create a `.env` file inside:
-
-```
-frontend/
-```
-
+Create a `.env` file inside the `frontend` folder.
 
 Example:
-
 
 ```env
 VITE_API_URL=http://localhost:5000
 ```
 
-
 ---
 
-# REST API Endpoints
-
+# REST API
 
 ## Customers
 
-
-### Create customer
+### Create Customer
 
 ```
 POST /customers
 ```
 
-
-Example body:
-
+Example:
 
 ```json
 {
@@ -370,48 +327,41 @@ Example body:
 }
 ```
 
-
 ---
 
-### Get customers
+### Get Customers
 
 ```
 GET /customers
 ```
 
-
 ---
 
-### Search customers
+### Search Customers
 
 ```
 GET /customers/search?q=value
 ```
 
-
 ---
 
-### Delete customer
+### Delete Customer
 
 ```
 DELETE /customers/{id}
 ```
 
-
 ---
 
 ## Simulations
 
-
-### Create simulation
+### Create Simulation
 
 ```
 POST /simulations
 ```
 
-
 Example:
-
 
 ```json
 {
@@ -422,49 +372,39 @@ Example:
 }
 ```
 
-
 ---
 
-### Get customer simulations
-
+### Get Customer Simulations
 
 ```
 GET /customers/{id}/simulations
 ```
 
-
 ---
 
 # Database
 
+The project uses **SQLite**.
 
-The application uses SQLite.
-
-The database file is created automatically when the backend starts:
+The database file is automatically created when the backend starts.
 
 ```
 backend/database.db
 ```
 
-
 ---
 
 # AI Workspace
 
-
-The repository includes an `ai-workspace` folder documenting the development process.
-
-
-Contents:
-
+The repository includes an `ai-workspace` directory documenting the development process.
 
 ## Architecture
 
 Contains:
 
 - Database design
+- System architecture
 - Project structure decisions
-
 
 ## Specs
 
@@ -472,20 +412,17 @@ Contains:
 
 - API specifications
 - Business rules
-- Pricing algorithm definition
-
+- Pricing algorithm
 
 ## Prompts
 
 Contains:
 
-- AI development workflow
-- Prompt strategies
-- Iterative development process
+- AI-assisted development workflow
+- Prompt engineering process
+- Iterative implementation history
 
-
-This documentation shows the use of AI as an engineering assistant while maintaining manual review and control over the final implementation.
-
+This documentation demonstrates the use of AI as an engineering assistant while maintaining manual review and full developer control over the final implementation.
 
 ---
 
@@ -493,12 +430,12 @@ This documentation shows the use of AI as an engineering assistant while maintai
 
 The project was developed following:
 
-- Modular architecture principles
-- Separation of business logic and API routes
-- Reusable frontend components
-- Manual validation of generated code
-- Incremental testing during development
-
+- Modular architecture
+- Separation of concerns
+- RESTful API principles
+- Reusable React components
+- Manual validation of AI-generated code
+- Incremental development and testing
 
 ---
 
