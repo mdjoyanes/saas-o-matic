@@ -30,6 +30,7 @@ export default function CreateCustomer({
     const [formData, setFormData] = useState({
 
         company_name: "",
+        tax_type: "DNI",
         tax_identifier: "",
         email: "",
         country: "",
@@ -124,6 +125,7 @@ export default function CreateCustomer({
             setFormData({
 
                 company_name: "",
+                tax_type: "DNI",
                 tax_identifier: "",
                 email: "",
                 country: "",
@@ -212,7 +214,33 @@ export default function CreateCustomer({
 
                     </Form.Group>
 
+                    <Form.Group className="mb-3">
 
+                        <Form.Label>
+                            Identifier Type
+                        </Form.Label>
+
+                        <Form.Select
+                            name="tax_type"
+                            value={formData.tax_type}
+                            onChange={handleChange}
+                        >
+
+                            <option value="DNI">
+                                DNI
+                            </option>
+
+                            <option value="NIF">
+                                NIF
+                            </option>
+
+                            <option value="CIF">
+                                CIF
+                            </option>
+
+                        </Form.Select>
+
+                    </Form.Group>
 
                     <Form.Group className="mb-3">
 

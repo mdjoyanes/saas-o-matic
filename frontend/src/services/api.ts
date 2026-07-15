@@ -6,7 +6,7 @@ import type { Simulation } from "../types/simulation";
 
 const api = axios.create({
 
-    baseURL: "https://glowing-system-pj5jx57j5v4x3xj6-5000.app.github.dev",
+    baseURL: import.meta.env.VITE_API_URL,
 
     withCredentials: false,
 
