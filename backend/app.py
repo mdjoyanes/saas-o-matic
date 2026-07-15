@@ -45,6 +45,7 @@ def seed_database():
 
             Customer(
                 company_name="NovaTech Solutions",
+                tax_type="NIF",
                 tax_identifier="12345678Z",
                 email="contact@novatech.es",
                 country="Spain",
@@ -53,6 +54,7 @@ def seed_database():
 
             Customer(
                 company_name="CloudPeak Systems",
+                tax_type="NIF",
                 tax_identifier="87654321X",
                 email="contact@example.com",
                 country="Germany",
@@ -61,6 +63,7 @@ def seed_database():
 
             Customer(
                 company_name="BrightCore Technologies",
+                tax_type="CIF",
                 tax_identifier="US45896321",
                 email="support@example.com",
                 country="United States",

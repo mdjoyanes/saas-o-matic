@@ -6,19 +6,55 @@ from database import db
 class Customer(db.Model):
     __tablename__ = "customers"
 
-    id = db.Column(db.Integer, primary_key=True)
 
-    company_name = db.Column(db.String(150), nullable=False)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    tax_identifier = db.Column(db.String(20), unique=True, nullable=False)
 
-    email = db.Column(db.String(120), nullable=False)
+    company_name = db.Column(
+        db.String(150),
+        nullable=False
+    )
 
-    country = db.Column(db.String(100), nullable=False)
 
-    plan = db.Column(db.String(50), nullable=False)
+    tax_type = db.Column(
+        db.String(10),
+        nullable=False
+    )
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    tax_identifier = db.Column(
+        db.String(20),
+        unique=True,
+        nullable=False
+    )
+
+
+    email = db.Column(
+        db.String(120),
+        nullable=False
+    )
+
+
+    country = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+
+    plan = db.Column(
+        db.String(50),
+        nullable=False
+    )
+
+
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
+
 
     simulations = db.relationship(
         "Simulation",
@@ -27,13 +63,25 @@ class Customer(db.Model):
         cascade="all, delete-orphan"
     )
 
+
     def to_dict(self):
+
         return {
+
             "id": self.id,
+
             "company_name": self.company_name,
+
+            "tax_type": self.tax_type,
+
             "tax_identifier": self.tax_identifier,
+
             "email": self.email,
+
             "country": self.country,
+
             "plan": self.plan,
+
             "created_at": self.created_at.isoformat()
+
         }
