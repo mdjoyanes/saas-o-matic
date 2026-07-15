@@ -137,3 +137,154 @@ p {
     0 0 0 0.2rem rgba(37, 99, 235, .15);
 
 }
+
+body {
+    transition: all .3s ease;
+    background-color: #ffffff;
+}
+
+
+body.dark-mode {
+
+    background-color: #0f172a;
+
+    color: #f8fafc;
+
+}
+
+
+/* Fondo completo */
+
+body.dark-mode #root {
+
+    background-color: #0f172a;
+
+}
+
+
+
+/* Títulos */
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3 {
+
+    color: #f8fafc;
+
+}
+
+
+
+/* Tarjetas */
+
+body.dark-mode .card {
+
+    background-color: #1e293b !important;
+
+    color: #f8fafc;
+
+    border: 1px solid #334155;
+
+}
+
+
+
+/* líneas */
+
+body.dark-mode hr {
+
+    border-color: #475569;
+
+}
+
+
+
+/* textos */
+
+body.dark-mode p {
+
+    color: #e2e8f0;
+
+}
+
+
+
+/* Inputs */
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+
+    background-color: #1e293b;
+
+    color: white;
+
+    border-color: #475569;
+
+}
+
+
+
+body.dark-mode .form-control::placeholder {
+
+    color: #94a3b8;
+
+}
+
+
+
+/* iconos */
+
+body.dark-mode i {
+
+    color: #e2e8f0;
+
+}
+
+
+
+/* texto muted */
+
+body.dark-mode .text-muted {
+
+    color: #94a3b8 !important;
+
+}
+
+body.dark-mode .navbar-brand {
+    color: #f8fafc !important;
+}
+
+
+body.dark-mode .navbar-brand i {
+    color: #f8fafc;
+}
+
+.app-footer {
+
+    background-color: #f8f9fa;
+
+    color: #6c757d;
+
+    transition: all .3s ease;
+
+}
+
+
+
+body.dark-mode .app-footer {
+
+    background-color: #0f172a;
+
+    color: #94a3b8;
+
+    border-top: 1px solid #334155 !important;
+
+}
+
+
+
+body.dark-mode .app-footer strong {
+
+    color: #f8fafc;
+
+}

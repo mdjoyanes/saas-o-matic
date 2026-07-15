@@ -2,14 +2,13 @@ import { Container } from "react-bootstrap";
 
 export default function Footer() {
     return (
-        <footer className="border-top mt-5 py-4 bg-light">
+        <footer className="app-footer border-top mt-5 py-4">
 
-            <Container className="text-center text-muted">
+            <Container className="text-center">
 
                 <small>
-
-                    © 2026 SaaS-O-Matic • Created by <strong>Marc Dominguez</strong>
-
+                    © 2026 SaaS-O-Matic • Created by{" "}
+                    <strong>Marc Dominguez</strong>
                 </small>
 
             </Container>

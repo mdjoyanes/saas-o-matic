@@ -1,10 +1,48 @@
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar, Container, Button } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 
 export default function AppNavbar() {
 
+
     const navigate = useNavigate();
     const location = useLocation();
+
+
+    const [darkMode, setDarkMode] = useState(() => {
+
+        return localStorage.getItem("theme") === "dark";
+
+    });
+
+
+
+    useEffect(() => {
+
+        if (darkMode) {
+
+            document.body.classList.add("dark-mode");
+
+            localStorage.setItem(
+                "theme",
+                "dark"
+            );
+
+        } else {
+
+            document.body.classList.remove("dark-mode");
+
+            localStorage.setItem(
+                "theme",
+                "light"
+            );
+
+        }
+
+    }, [darkMode]);
+
+
 
     const handleClick = () => {
 
@@ -13,10 +51,12 @@ export default function AppNavbar() {
             navigate("/");
 
             setTimeout(() => {
+
                 window.scrollTo({
                     top: 0,
                     behavior: "smooth"
                 });
+
             }, 100);
 
         } else {
@@ -30,19 +70,24 @@ export default function AppNavbar() {
 
     };
 
+
+
     return (
 
         <Navbar
-            bg="dark"
-            variant="dark"
+            bg={darkMode ? "dark" : "light"}
+            variant={darkMode ? "dark" : "light"}
             className="shadow-sm sticky-top"
         >
 
             <Container>
 
+
                 <Navbar.Brand
                     className="fw-bold"
-                    style={{ cursor: "pointer" }}
+                    style={{
+                        cursor: "pointer"
+                    }}
                     onClick={handleClick}
                 >
 
@@ -52,9 +97,25 @@ export default function AppNavbar() {
 
                 </Navbar.Brand>
 
+
+
+                <Button
+                    variant="link"
+                    className="text-decoration-none fs-5"
+                    title={
+                        darkMode
+                            ? "Switch to light mode"
+                            : "Switch to dark mode"
+                    }
+                    onClick={() => setDarkMode(!darkMode)}
+                >
+                    {darkMode ? "☀️" : "🌙"}
+                </Button>
+
             </Container>
 
         </Navbar>
 
     );
+
 }

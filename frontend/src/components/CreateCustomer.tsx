@@ -158,9 +158,15 @@ export default function CreateCustomer({
 
             <Button
                 variant="primary"
+                className="px-4"
+                style={{
+                    height: "42px",
+                    whiteSpace: "nowrap"
+                }}
                 onClick={() => setShow(true)}
             >
-                + New Customer
+                <i className="bi bi-plus-lg me-2"></i>
+                New Customer
             </Button>
 
 

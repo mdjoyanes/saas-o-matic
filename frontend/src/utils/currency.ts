@@ -1,23 +1,36 @@
+export type Currency =
+    | "EUR"
+    | "USD"
+    | "GBP";
+
+
 export const currencies = {
+
     EUR: {
         symbol: "€",
-        rate: 1
+        name: "Euro"
     },
+
     USD: {
         symbol: "$",
-        rate: 1.17
+        name: "Dollar"
     },
+
     GBP: {
         symbol: "£",
-        rate: 0.86
+        name: "Pound"
     }
+
 };
 
-export type Currency = keyof typeof currencies;
 
-export function convertCurrency(
+
+export const convertCurrency = (
     amount: number,
-    currency: Currency
-) {
-    return amount * currencies[currency].rate;
-}
+    currency: Currency,
+    rates: Record<string, number>
+) => {
+
+    return amount * rates[currency];
+
+};

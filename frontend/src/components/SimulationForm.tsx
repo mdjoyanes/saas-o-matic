@@ -18,6 +18,34 @@ export default function SimulationForm({
     const [activeUsers, setActiveUsers] = useState(10);
     const [storageGb, setStorageGb] = useState(100);
     const [apiCalls, setApiCalls] = useState(50000);
+    const calculatePreviewPrice = () => {
+
+        let total = 0;
+
+
+        if (activeUsers <= 10) {
+
+            total = activeUsers * 10;
+
+        } else if (activeUsers <= 50) {
+
+            total =
+                (10 * 10) +
+                ((activeUsers - 10) * 8);
+
+        } else {
+
+            total =
+                (10 * 10) +
+                (40 * 8) +
+                ((activeUsers - 50) * 5);
+
+        }
+
+
+        return total;
+
+    };
 
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<Simulation | null>(null);
@@ -71,7 +99,7 @@ export default function SimulationForm({
 
                     <Form.Range
                         min={1}
-                        max={100}
+                        max={200}
                         value={activeUsers}
                         onChange={(e) =>
                             setActiveUsers(Number(e.target.value))
@@ -79,6 +107,17 @@ export default function SimulationForm({
                     />
 
                     <strong>{activeUsers}</strong>
+                    <div className="mt-3">
+
+                        <strong>
+                            Estimated monthly price:
+                        </strong>
+
+                        <h4 className="text-primary">
+                            €{calculatePreviewPrice().toFixed(2)}
+                        </h4>
+
+                    </div>
 
                 </Form.Group>
 

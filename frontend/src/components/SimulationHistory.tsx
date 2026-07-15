@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+    getExchangeRates
+} from "../services/exchange";
+
 import {
     Card,
     Button,
@@ -8,7 +12,10 @@ import {
 } from "react-bootstrap";
 
 import type { Simulation } from "../types/simulation";
-import { deleteSimulation } from "../services/api";
+import {
+    deleteSimulation,
+    updateSimulation
+} from "../services/api";
 
 import {
     convertCurrency,
@@ -20,12 +27,14 @@ import {
 interface Props {
     simulations: Simulation[];
     onSimulationDeleted: () => void;
+    onSimulationUpdated: () => void;
 }
 
 
 export default function SimulationHistory({
     simulations,
-    onSimulationDeleted
+    onSimulationDeleted,
+    onSimulationUpdated
 }: Props) {
 
 
@@ -52,8 +61,38 @@ export default function SimulationHistory({
         });
 
 
-    const [savedMessage, setSavedMessage] =
+    const [updatedMessage, setUpdatedMessage] =
         useState<number | null>(null);
+    const [rates, setRates] = useState({
+        EUR: 1,
+        USD: 1,
+        GBP: 1
+    });
+    useEffect(() => {
+
+        const loadRates = async () => {
+
+            try {
+
+                const data = await getExchangeRates();
+
+                setRates(data);
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading exchange rates",
+                    error
+                );
+
+            }
+
+        };
+
+
+        loadRates();
+
+    }, []);
 
 
     const handleDelete = async () => {
@@ -161,18 +200,21 @@ export default function SimulationHistory({
 
 
 
-                            <p>
+                            <div className="mb-2">
+
                                 <strong>Total:</strong>{" "}
                                 {currencies[selectedCurrency].symbol}
                                 {convertCurrency(
                                     simulation.total_price,
-                                    selectedCurrency
+                                    selectedCurrency,
+                                    rates
                                 ).toFixed(2)}
-                            </p>
+
+                            </div>
 
 
 
-                            <div className="d-flex justify-content-center mt-3">
+                            <div className="d-flex align-items-center gap-2 mt-3">
 
                                 <Form.Select
                                     style={{
@@ -200,59 +242,70 @@ export default function SimulationHistory({
 
                                 </Form.Select>
 
-                            </div>
-
-                            <div className="text-center">
 
                                 <Button
                                     variant="primary"
                                     size="sm"
-                                    className="mt-2"
-                                    onClick={() => {
+                                    onClick={async () => {
 
                                         const updatedCurrencies = {
                                             ...savedCurrencies,
                                             [simulation.id]: selectedCurrency
                                         };
 
+
                                         setSavedCurrencies(updatedCurrencies);
+
 
                                         localStorage.setItem(
                                             "simulationCurrencies",
                                             JSON.stringify(updatedCurrencies)
                                         );
 
-                                        setSavedMessage(simulation.id);
+
+                                        await updateSimulation(
+                                            simulation.id
+                                        );
+
+                                        onSimulationUpdated();
+
+
+                                        setUpdatedMessage(
+                                            simulation.id
+                                        );
+
 
                                         setTimeout(() => {
-                                            setSavedMessage(null);
+                                            setUpdatedMessage(null);
                                         }, 2000);
 
                                     }}
                                 >
-                                    Save Currency
+                                    Save
                                 </Button>
 
                             </div>
 
-                            {savedMessage === simulation.id && (
+                            {updatedMessage === simulation.id && (
 
                                 <Alert
                                     variant="success"
-                                    className="mt-3 mb-0"
+                                    className="mt-2 mb-0 py-2"
                                 >
-                                    Currency saved successfully ✓
+                                    Simulation updated successfully ✓
                                 </Alert>
 
                             )}
 
 
                             <small className="text-muted d-block mt-3">
+                                Created:{" "}
+                                {simulation.created_at}
+                            </small>
 
-                                {new Date(
-                                    simulation.created_at
-                                ).toLocaleString()}
-
+                            <small className="text-muted d-block">
+                                Modified:{" "}
+                                {simulation.updated_at}
                             </small>
 
 
