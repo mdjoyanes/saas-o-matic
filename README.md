@@ -294,13 +294,23 @@ http://localhost:5173
 
 # Environment Configuration
 
-Create a `.env` file inside the `frontend` folder.
+> ⚠️ **IMPORTANT**
+>
+> The frontend **will not work** unless you create the `.env` file before running `npm run dev`.
 
-Example:
+Create a `.env` file inside the `frontend` folder with the following content:
 
 ```env
 VITE_API_URL=http://localhost:5000
 ```
+
+If you create or modify the `.env` file while the Vite development server is running, stop it and run:
+
+```bash
+npm run dev
+```
+
+again so the changes are applied.
 
 ---
 
